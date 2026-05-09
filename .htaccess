@@ -1,0 +1,28 @@
+Options -Indexes
+Options +FollowSymLinks
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Block direct browser access to internal PHP includes
+    RewriteRule ^includes/config\.php$ - [F,L]
+    RewriteRule ^admin/auth\.php$ - [F,L]
+    RewriteRule ^admin/admin_header\.php$ - [F,L]
+    RewriteRule ^admin/admin_footer\.php$ - [F,L]
+</IfModule>
+
+# Block direct access to .sql files
+<FilesMatch "\.sql$">
+    Order deny,allow
+    Deny from all
+</FilesMatch>
+
+# PHP settings (XAMPP/WAMP)
+<IfModule mod_php8.c>
+    php_value upload_max_filesize 10M
+    php_value post_max_size 10M
+</IfModule>
+<IfModule mod_php7.c>
+    php_value upload_max_filesize 10M
+    php_value post_max_size 10M
+</IfModule>
